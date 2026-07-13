@@ -1,0 +1,119 @@
+{
+  "version": 1,
+  "skills": {
+    "banner-design": {
+      "source": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "sourceType": "github",
+      "skillPath": ".claude/skills/banner-design/SKILL.md",
+      "computedHash": "f859a951ded1109a38bcc7f18faf4581f9adbf0550df7a11c013e77a5b229541"
+    },
+    "brand": {
+      "source": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "sourceType": "github",
+      "skillPath": ".claude/skills/brand/SKILL.md",
+      "computedHash": "bd65dbd8de679805d1ad740c74a41b4f831d08ff0240390a7ed2947c62a896b9"
+    },
+    "design": {
+      "source": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "sourceType": "github",
+      "skillPath": ".claude/skills/design/SKILL.md",
+      "computedHash": "bb2e3ffee4b7b69e5a38ce08f6010ca79381d9f53b9dfadb33aee1ece6f1679a"
+    },
+    "design-system": {
+      "source": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "sourceType": "github",
+      "skillPath": ".claude/skills/design-system/SKILL.md",
+      "computedHash": "5a3dbae4a3c2ad9f96323d9bfae926b3c21bb1e3b066aa067906f577a2ff2545"
+    },
+    "extension-analyze": {
+      "source": "quangpl/browser-extension-skills",
+      "sourceType": "github",
+      "skillPath": "skills/extension-analyze/SKILL.md",
+      "computedHash": "206f2d80185294d5ebef49998795a360ac3423ce8dc938f6ec44b81668c951ac"
+    },
+    "extension-assets": {
+      "source": "quangpl/browser-extension-skills",
+      "sourceType": "github",
+      "skillPath": "skills/extension-assets/SKILL.md",
+      "computedHash": "3349a4908435797aa1069f7597d303106c1230200faa93cd990cd83e4922877d"
+    },
+    "extension-backend": {
+      "source": "quangpl/browser-extension-skills",
+      "sourceType": "github",
+      "skillPath": "skills/extension-backend/SKILL.md",
+      "computedHash": "b11b464d223a1b185cfb2844852c02840e6a2b834e3d7046af36d008dc46aff4"
+    },
+    "extension-create": {
+      "source": "quangpl/browser-extension-skills",
+      "sourceType": "github",
+      "skillPath": "skills/extension-create/SKILL.md",
+      "computedHash": "1f86c9fb98afc357e2779a3c222a8cc142167439fa5cfd646f483080963b8676"
+    },
+    "extension-dev": {
+      "source": "quangpl/browser-extension-skills",
+      "sourceType": "github",
+      "skillPath": "skills/extension-dev/SKILL.md",
+      "computedHash": "6aaae9281a28cfa5a598c0c5b39c54b14f8e8c724be4983d6002f934accfaeaf"
+    },
+    "extension-manifest": {
+      "source": "quangpl/browser-extension-skills",
+      "sourceType": "github",
+      "skillPath": "skills/extension-manifest/SKILL.md",
+      "computedHash": "77ea35ad83ff2d3424b2971a2673ded255a91bb946137a120a12c85c0f70bda4"
+    },
+    "extension-migration": {
+      "source": "quangpl/browser-extension-skills",
+      "sourceType": "github",
+      "skillPath": "skills/extension-migration/SKILL.md",
+      "computedHash": "ef523b451d7cdb31b4f8801fde2ad652eb42a3ea4e07e0c51f9ecd228b5efcae"
+    },
+    "extension-payment": {
+      "source": "quangpl/browser-extension-skills",
+      "sourceType": "github",
+      "skillPath": "skills/extension-payment/SKILL.md",
+      "computedHash": "f6d1659724b2cf6f2fbf29a2fbc688016a0fad38de9407a2c28344f3167efb18"
+    },
+    "extension-publish": {
+      "source": "quangpl/browser-extension-skills",
+      "sourceType": "github",
+      "skillPath": "skills/extension-publish/SKILL.md",
+      "computedHash": "ea4537689ad4b103f0262fbd31b481933fbccf445f66cf43938f1dddca2fd76e"
+    },
+    "extension-review": {
+      "source": "quangpl/browser-extension-skills",
+      "sourceType": "github",
+      "skillPath": "skills/extension-review/SKILL.md",
+      "computedHash": "b838c1036b8c0fb641ca98efab33786eae2e790e7af91ca61e5d9967cbb2b090"
+    },
+    "extension-test": {
+      "source": "quangpl/browser-extension-skills",
+      "sourceType": "github",
+      "skillPath": "skills/extension-test/SKILL.md",
+      "computedHash": "d3174911b1160f8f3dc8129acbf4a69174677cfbb5e1aad42975bd6075156c0a"
+    },
+    "extension-ui": {
+      "source": "quangpl/browser-extension-skills",
+      "sourceType": "github",
+      "skillPath": "skills/extension-ui/SKILL.md",
+      "computedHash": "dc508ba6f8e731964b57993da8b5c31215c5ada62fda08eba7b1b99b52ff232e"
+    },
+    "slides": {
+      "source": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "sourceType": "github",
+      "skillPath": ".claude/skills/slides/SKILL.md",
+      "computedHash": "a2b3559b58afc484548e1eb359e20495d11cf12b90da7c1fbba50efed9a70340"
+    },
+    "ui-styling": {
+      "source": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "sourceType": "github",
+      "skillPath": ".claude/skills/ui-styling/SKILL.md",
+      "computedHash": "17112ca219efd89b7a25bab51c19a2a146188c34a3fee89384280768f66472cc"
+    },
+    "ui-ux-pro-max": {
+      "source": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "sourceType": "github",
+      "skillPath": ".claude/skills/ui-ux-pro-max/SKILL.md",
+      "computedHash": "648a7334f3dd6cc826e35d12c48318534caf75a2176d78ef1abd8e4a3cd15334"
+    }
+  }
+}

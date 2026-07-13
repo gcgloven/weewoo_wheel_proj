@@ -1,0 +1,40 @@
+# Dependencies
+node_modules/
+
+# WXT build output
+.output/
+.wxt/
+dist/
+
+# Package artifacts
+*.zip
+
+# Environment & secrets
+.env
+.env.*
+!.env.example
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+/temp
+# OS
+.DS_Store
+Thumbs.db
+weewooweeoo/tests/data_generations
+# Dependency lock (optional — keep pnpm-lock.yaml committed)
+# pnpm-lock.yaml is tracked
+
+# TypeScript build info
+*.tsbuildinfo
+
+# Coverage
+coverage/
+
+# Chrome extension packed
+*.crx
+*.pem
+weewooweeoo/package-lock.json

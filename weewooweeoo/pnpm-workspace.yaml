@@ -1,0 +1,10 @@
+allowBuilds:
+  esbuild: true
+  esbuild@0.27.7: true
+  esbuild@0.28.1: true
+  puppeteer: true
+  puppeteer@25.3.0: true
+  spawn-sync: true
+  spawn-sync@1.0.15: true
+  unrs-resolver: true
+  unrs-resolver@1.12.2: true

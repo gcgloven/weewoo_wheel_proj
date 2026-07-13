@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52" fill="none">
+  <!-- Outer ring -->
+  <circle cx="26" cy="26" r="22" stroke="#b0c8ff" stroke-width="2.5" stroke-dasharray="8 4"/>
+  <!-- Inner hub -->
+  <circle cx="26" cy="26" r="6" fill="#7aafff" opacity="0.6"/>
+  <!-- Spokes -->
+  <line x1="26" y1="8" x2="26" y2="20" stroke="#b0c8ff" stroke-width="1.5" opacity="0.5"/>
+  <line x1="26" y1="32" x2="26" y2="44" stroke="#b0c8ff" stroke-width="1.5" opacity="0.5"/>
+  <line x1="8" y1="26" x2="20" y2="26" stroke="#b0c8ff" stroke-width="1.5" opacity="0.5"/>
+  <line x1="32" y1="26" x2="44" y2="26" stroke="#b0c8ff" stroke-width="1.5" opacity="0.5"/>
+  <!-- Diagonal spokes -->
+  <line x1="13" y1="13" x2="20" y2="20" stroke="#b0c8ff" stroke-width="1.5" opacity="0.4"/>
+  <line x1="32" y1="32" x2="39" y2="39" stroke="#b0c8ff" stroke-width="1.5" opacity="0.4"/>
+  <line x1="13" y1="39" x2="20" y2="32" stroke="#b0c8ff" stroke-width="1.5" opacity="0.4"/>
+  <line x1="32" y1="20" x2="39" y2="13" stroke="#b0c8ff" stroke-width="1.5" opacity="0.4"/>
+</svg>

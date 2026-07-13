@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <!-- Background circle -->
+  <circle cx="64" cy="64" r="60" fill="#1a1a24" stroke="#4a90d9" stroke-width="3"/>
+
+  <!-- Radial slots (4 positions at 45° intervals) -->
+  <!-- Top (Explain - green) -->
+  <circle cx="64" cy="22" r="18" fill="#2d4a1a" stroke="#64c850" stroke-width="1.5"/>
+  <text x="64" y="19" text-anchor="middle" fill="#c8f0b0" font-size="16" font-family="sans-serif">💡</text>
+  <text x="64" y="31" text-anchor="middle" fill="#c8f0b0" font-size="7" font-family="sans-serif" font-weight="bold">Explain</text>
+
+  <!-- Right (Summary - blue) -->
+  <circle cx="106" cy="64" r="18" fill="#1a3a5c" stroke="#4096ff" stroke-width="1.5"/>
+  <text x="106" y="61" text-anchor="middle" fill="#b8d9ff" font-size="16" font-family="sans-serif">📋</text>
+  <text x="106" y="73" text-anchor="middle" fill="#b8d9ff" font-size="7" font-family="sans-serif" font-weight="bold">Summary</text>
+
+  <!-- Bottom (Search - purple) -->
+  <circle cx="64" cy="106" r="18" fill="#4a1a5c" stroke="#b450f0" stroke-width="1.5"/>
+  <text x="64" y="103" text-anchor="middle" fill="#e0c0ff" font-size="16" font-family="sans-serif">🔍</text>
+  <text x="64" y="115" text-anchor="middle" fill="#e0c0ff" font-size="7" font-family="sans-serif" font-weight="bold">Search</text>
+
+  <!-- Left (Task - orange) -->
+  <circle cx="22" cy="64" r="18" fill="#5c3a1a" stroke="#ffa03c" stroke-width="1.5"/>
+  <text x="22" y="61" text-anchor="middle" fill="#ffe0c0" font-size="16" font-family="sans-serif">✅</text>
+  <text x="22" y="73" text-anchor="middle" fill="#ffe0c0" font-size="7" font-family="sans-serif" font-weight="bold">Task</text>
+
+  <!-- Center hub -->
+  <circle cx="64" cy="64" r="16" fill="#2a2a3a" stroke="rgba(255,255,255,0.2)" stroke-width="2"/>
+  <text x="64" y="68" text-anchor="middle" fill="#e0e0e0" font-size="18" font-family="sans-serif">🎡</text>
+</svg>
