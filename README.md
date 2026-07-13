@@ -21,7 +21,6 @@
 ## 📸 Screenshots
 
 > **Chrome Web Store screenshots (1280×800) are being prepared for the v0.1.0 release.**
-> See [pre-release tracker](docs/progress/pre-release-0.1.0.md) for status.
 
 <p align="center">
   <img src="docs/screenshots/overview_dispaly_promo.png" alt="WeeWoo² Wheel promo overview" width="80%" />
