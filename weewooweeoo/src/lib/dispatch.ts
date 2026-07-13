@@ -148,28 +148,55 @@ export async function runAction(req: ActionRequest): Promise<ActionResult> {
       return await runSearchAction(req.selection, settings);
     }
 
-    // ---- Other actions: one-shot LLM call ----
-    const messages = buildPrompt(req.actionId, req.selection, settings.search, settings.language, settings.promptTemplates, settings.activePromptId);
-    console.log('💬 [dispatch] calling chat() with', messages.length, 'messages');
-    const raw = await chat(messages, {
-      baseUrl: settings.baseUrl,
-      apiKey: settings.apiKey,
-      model: settings.model,
-      maxTokens: settings.maxTokens,
-    });
-    console.log('✅ [dispatch] chat() returned', raw.length, 'chars:', raw.slice(0, 80));
+    // ---- Other actions: create placeholder card → LLM → update card ----
+    const { draftId, animInterval } = await createLoadingCard(req.actionId, req.selection);
 
-    // Smart title extraction — different strategies per action type
-    const title = extractTitle(raw, req.actionId, undefined, req.selection);
+    try {
+      const messages = buildPrompt(req.actionId, req.selection, settings.search, settings.language, settings.promptTemplates, settings.activePromptId);
+      console.log('💬 [dispatch] calling chat() with', messages.length, 'messages');
+      const raw = await chat(messages, {
+        baseUrl: settings.baseUrl,
+        apiKey: settings.apiKey,
+        model: settings.model,
+        maxTokens: settings.maxTokens,
+      });
+      console.log('✅ [dispatch] chat() returned', raw.length, 'chars:', raw.slice(0, 80));
 
-    return {
-      ok: true,
-      cardType: registry.cardType,
-      title,
-      body: raw,
-    };
+      // Smart title extraction — different strategies per action type
+      const title = extractTitle(raw, req.actionId, undefined, req.selection);
+
+      clearInterval(animInterval);
+      await updateCard(draftId, { title, body: raw, updatedAt: Date.now() });
+      notifySidepanel();
+
+      return {
+        ok: true,
+        cardType: registry.cardType,
+        title,
+        body: raw,
+        saved: true,
+      };
+    } catch (err: any) {
+      console.error('💥 [dispatch] action failed:', err?.message);
+      clearInterval(animInterval);
+      const label = LOADING_LABELS[req.actionId]?.verb ?? req.actionId;
+      await updateCard(draftId, {
+        title: `❌ ${label} failed`,
+        body: `**Error:** ${err?.message ?? 'Unknown error'}\n\n_Original selection:_\n> ${req.selection.slice(0, 300)}`,
+        updatedAt: Date.now(),
+      });
+      notifySidepanel();
+      return {
+        ok: false,
+        cardType: registry.cardType,
+        title: '',
+        body: '',
+        error: err?.message ?? 'Unknown error',
+        saved: true,
+      };
+    }
   } catch (err: any) {
-    console.error('💥 [dispatch] action failed:', err?.message);
+    console.error('💥 [dispatch] setup failed:', err?.message);
     return {
       ok: false,
       cardType: registry.cardType,
@@ -200,6 +227,55 @@ const LOADING_MESSAGES = [
   'Negotiating with routers',
 ];
 
+/** Emoji prefix + gerund label for each action type's loading card. */
+const LOADING_LABELS: Record<string, { emoji: string; verb: string }> = {
+  explain: { emoji: '💡', verb: 'Explaining' },
+  summary: { emoji: '📝', verb: 'Summarizing' },
+  search:  { emoji: '🔍', verb: 'Searching' },
+  task:    { emoji: '✅', verb: 'Planning task' },
+};
+
+/** Safely notify the sidepanel that cards have changed. Non-critical — fails silently. */
+function notifySidepanel() {
+  try {
+    chrome?.runtime?.sendMessage?.({ kind: 'CARDS_UPDATED' })?.catch?.(() => {});
+  } catch { /* sidepanel may not be open */ }
+}
+
+/**
+ * Create a placeholder card for any action type so the sidepanel shows
+ * a loading card immediately while the LLM processes.
+ * Returns [draftId, animInterval] — caller MUST clearInterval and updateCard.
+ */
+async function createLoadingCard(
+  actionId: string,
+  selectedText: string,
+): Promise<{ draftId: string; animInterval: ReturnType<typeof setInterval> }> {
+  const label = LOADING_LABELS[actionId] ?? { emoji: '⚡', verb: 'Processing' };
+  const draftId = await addCard({
+    type: actionId === 'search' ? 'search' : 'knowledge',
+    title: `${label.emoji} ${label.verb}…`,
+    body: `_Working on your selection..._`,
+    tags: [],
+    folder: 'no_folder',
+    sourceUrl: '',
+    sourceTitle: '',
+    originalText: selectedText,
+  });
+
+  let tick = 0;
+  const animInterval = setInterval(() => {
+    tick++;
+    const msg = LOADING_MESSAGES[tick % LOADING_MESSAGES.length];
+    const dots = '.'.repeat((tick % 3) + 1);
+    updateCard(draftId, { title: `${label.emoji} ${msg}${dots}`, updatedAt: Date.now() }).catch(() => {});
+  }, 800);
+
+  notifySidepanel();
+
+  return { draftId, animInterval };
+}
+
 async function runSearchAction(
   selectedText: string,
   settings: Awaited<ReturnType<typeof getSettings>>,
@@ -213,25 +289,7 @@ async function runSearchAction(
   };
 
   // ---- Create placeholder card immediately (loading state) ----
-  const draftId = await addCard({
-    type: cardType,
-    title: '🔍 Agent is searching...',
-    body: '_Scouring the web for information on your selection..._',
-    tags: [],
-    folder: 'no_folder',
-    sourceUrl: '',
-    sourceTitle: '',
-    originalText: selectedText,
-  });
-
-  // ---- Animate the placeholder title while searching ----
-  let tick = 0;
-  const animInterval = setInterval(() => {
-    tick++;
-    const msg = LOADING_MESSAGES[tick % LOADING_MESSAGES.length];
-    const dots = '.'.repeat((tick % 3) + 1);
-    updateCard(draftId, { title: `🔍 ${msg}${dots}`, updatedAt: Date.now() }).catch(() => {});
-  }, 800);
+  const { draftId, animInterval } = await createLoadingCard('search', selectedText);
 
   try {
     // Gate: if searchMode is 'knowledge', skip straight to Tier C
@@ -242,7 +300,7 @@ async function runSearchAction(
       const title = extractTitle(result.body, 'search', result.query, selectedText);
       clearInterval(animInterval);
       await updateCard(draftId, { title, body: result.body, updatedAt: Date.now() });
-      chrome.runtime.sendMessage({ kind: 'CARDS_UPDATED' }).catch(() => {});
+      notifySidepanel();
       console.log(`🔍 [dispatch] search completed via Tier ${result.tier}, title:`, title);
       return { ok: true, cardType, title, body: result.body, saved: true, searchTier: result.tier };
     }
@@ -267,7 +325,7 @@ async function runSearchAction(
     const title = extractTitle(result.body, 'search', result.query, selectedText);
     clearInterval(animInterval);
     await updateCard(draftId, { title, body: result.body, updatedAt: Date.now() });
-    chrome.runtime.sendMessage({ kind: 'CARDS_UPDATED' }).catch(() => {});
+    notifySidepanel();
     console.log(`🔍 [dispatch] search completed via Tier ${result.tier}, title:`, title);
     return { ok: true, cardType, title, body: result.body, saved: true, searchTier: result.tier };
   } catch (err: any) {
@@ -278,7 +336,7 @@ async function runSearchAction(
       body: `**Error:** ${err?.message ?? 'Unknown error'}\n\n_Original selection:_\n> ${selectedText.slice(0, 300)}`,
       updatedAt: Date.now(),
     });
-    chrome.runtime.sendMessage({ kind: 'CARDS_UPDATED' }).catch(() => {});
+    notifySidepanel();
     return {
       ok: false,
       cardType,
