@@ -46,9 +46,11 @@ interface WheelProps {
   slots: string[];
   onPick: (id: string) => void;
   config: WheelSkinConfig;
+  /** When true, image icons get invert(1) so dark doodle icons are visible on dark backgrounds. */
+  isDark?: boolean;
 }
 
-export function Wheel({ slots, onPick, config }: WheelProps) {
+export function Wheel({ slots, onPick, config, isDark }: WheelProps) {
   const items = slots.map((id) => {
     const action = REGISTRY[id];
     const style = config.colors[id] ?? config.fallbackColor;
@@ -145,7 +147,7 @@ export function Wheel({ slots, onPick, config }: WheelProps) {
           <img
             src={config.centerIcon.value}
             alt="Close wheel"
-            style={{ width: 28, height: 28, objectFit: 'contain', pointerEvents: 'none' }}
+            style={{ width: 28, height: 28, objectFit: 'contain', pointerEvents: 'none', filter: isDark ? 'invert(1)' : undefined }}
           />
         ) : (
           <span style={{ fontSize: 22, lineHeight: 1 }}>{config.centerIcon.value}</span>
@@ -222,7 +224,7 @@ export function Wheel({ slots, onPick, config }: WheelProps) {
               <img
                 src={item.icon.value}
                 alt={item.label}
-                style={{ width: 26, height: 26, objectFit: 'contain', pointerEvents: 'none' }}
+                style={{ width: 26, height: 26, objectFit: 'contain', pointerEvents: 'none', filter: isDark ? 'invert(1)' : undefined }}
               />
             ) : (
               <span style={{ fontSize: 20, lineHeight: 1 }}>{item.icon.value}</span>

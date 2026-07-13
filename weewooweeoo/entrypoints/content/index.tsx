@@ -139,6 +139,7 @@ export default defineContentScript({
       const [visible, setVisible] = useState(false);
       const [position, setPosition] = useState({ x: 0, y: 0 });
       const selectionRef = useRef({ text: '', sourceUrl: '', sourceTitle: '' });
+      const lastMouseUpRef = useRef(0);
       const [skinId, setSkinId] = useState(wheelSkin);
       const [isDark, setIsDark] = useState(themeDark);
 
@@ -164,9 +165,10 @@ export default defineContentScript({
         originalText: string;
       } | null>(null);
 
-      // ---- selection listener ----
+      // ---- selection listener (mouseup + selectionchange fallback) ----
       useEffect(() => {
-        const handleMouseUp = () => {
+        /** Shared logic: read the current selection and show the wheel. */
+        const showWheelForSelection = () => {
           // Skip wheel display in right-click-only mode
           if (wheelTrigger === 'rightclick') return;
 
@@ -194,6 +196,26 @@ export default defineContentScript({
           setResult(null);
         };
 
+        const handleMouseUp = () => {
+          lastMouseUpRef.current = Date.now();
+          showWheelForSelection();
+        };
+
+        // selectionchange fires on SPAs like ChatGPT where mouseup alone may
+        // be consumed by the page's own event handlers.  Debounce so we don't
+        // fight with mouseup, and skip when mouseup already handled it.
+        let selectionTimer: ReturnType<typeof setTimeout> | null = null;
+
+        const handleSelectionChange = () => {
+          // If mouseup just fired, it already handled this selection
+          if (Date.now() - lastMouseUpRef.current < 250) return;
+
+          if (selectionTimer) clearTimeout(selectionTimer);
+          selectionTimer = setTimeout(() => {
+            showWheelForSelection();
+          }, 300);
+        };
+
         const handleMouseDown = (e: MouseEvent) => {
           const target = e.target as HTMLElement | null;
           // Shadow DOM retargets events crossing its boundary: any click inside
@@ -210,9 +232,12 @@ export default defineContentScript({
 
         document.addEventListener('mouseup', handleMouseUp);
         document.addEventListener('mousedown', handleMouseDown);
+        document.addEventListener('selectionchange', handleSelectionChange);
         return () => {
           document.removeEventListener('mouseup', handleMouseUp);
           document.removeEventListener('mousedown', handleMouseDown);
+          document.removeEventListener('selectionchange', handleSelectionChange);
+          if (selectionTimer) clearTimeout(selectionTimer);
         };
       }, []);
 
@@ -349,7 +374,7 @@ export default defineContentScript({
                 pointerEvents: 'auto',  // ← MUST HAVE: WXT overlay has pointer-events:none
               }}
             >
-              <Wheel slots={slots} onPick={handlePick} config={getWheelConfig(skinId, isDark)} />
+              <Wheel slots={slots} onPick={handlePick} config={getWheelConfig(skinId, isDark)} isDark={isDark} />
             </div>
           )}
 
