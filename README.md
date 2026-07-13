@@ -29,7 +29,7 @@
 ## 🚀 Quick Start
 
 ```bash
-git clone https://github.com/gcgloven/weewoo_wheel.git
+git clone https://github.com/gcgloven/weewoo_wheel_proj.git
 cd weewooweeoo
 pnpm install
 pnpm dev          # Development build with HMR
