@@ -106,7 +106,7 @@ Text selection → Radial wheel (shadow DOM) → Pick action
 | Shadow DOM event fix (real mouse clicks work) | ✅ |
 | Pre-publish prep (icons, permission audit, CWS zip) | ✅ |
 | CWS store listing copy + privacy policy | ✅ |
-| CWS screenshots (1280×800) | 🔄 |
+| CWS screenshots (1280×800) | ✅ |
 
 ## 🧪 Test Suite
 
@@ -119,37 +119,6 @@ pnpm build && node --import tsx tests/e2e/configure-and-search.ts  # Full E2E fl
 node --import tsx tests/e2e/store-screenshots.ts  # CWS screenshot capture
 ```
 
-## 📚 Docs
-
-| File | Purpose |
-|------|---------|
-| [docs/user_scenario_doc.md](docs/user_scenario_doc.md) | Product vision & user scenarios |
-| [docs/plan/2026-07-09-weewoo-wheel-mvp.md](docs/plan/2026-07-09-weewoo-wheel-mvp.md) | Master implementation plan |
-| [docs/product_benchmark.md](docs/product_benchmark.md) | Competitor analysis |
-| [docs/progress/](docs/progress/) | Per-phase progress tracking (0–8 + pre-release) |
-| [docs/pre-release_plan.md](docs/pre-release_plan.md) | Chrome Web Store release readiness plan |
-| [docs/progress/pre-release-0.1.0.md](docs/progress/pre-release-0.1.0.md) | v0.1.0 pre-release progress tracker |
-| [docs/privacy-policy.md](docs/privacy-policy.md) | Privacy policy |
-| [docs/store-listing-copy.md](docs/store-listing-copy.md) | CWS listing copy |
-| [docs/permission-justifications.md](docs/permission-justifications.md) | CWS permission justifications |
-| [docs/repair/repair-log-ButtonNotResponsive.md](docs/repair/repair-log-ButtonNotResponsive.md) | Post-MVP bug fix log (6 bugs) |
-
-## 📈 Progress
-
-| Phase | Status | Notes |
-|-------|--------|--------|
-| 0 — Scaffold | ✅ | `7f8bf54` |
-| 1 — Core Infrastructure | ✅ | `99d7356` |
-| 2 — Radial Wheel | ✅ | `24754ea` |
-| 3 — Result Panel | ✅ | `f4e8ae8` |
-| 4 — Actions & Dispatch | ✅ | `880242f` |
-| 5 — Scrapbook Side Panel | ✅ | `4131964` |
-| 6 — Options Page | ✅ | `61713cc` |
-| 7 — E2E Test Hardening | ✅ | `bab2754` |
-| 8 — Pre-Publish Prep | ✅ | `674b82e` |
-| 🚀 0.1.0 Pre-Release | 🔄 | Gates pass. Screenshots + manual QA remain. |
-| 🔧 Post-MVP fixes | ✅ | `5bf2c7e`–`b36dd9d` |
-
 ## 📄 License
 
-MIT
+BSD 3-Clause License. See [LICENSE](LICENSE) for details.
